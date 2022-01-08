@@ -1,0 +1,40 @@
+{
+	"name": "source_blob",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "df_blob_linkedservices",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "multiple_pipe_using_single_dataset"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "sources"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			}
+		]
+	}
+}
