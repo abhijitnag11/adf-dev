@@ -1,0 +1,32 @@
+{
+	"name": "desctination_blob",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "df_blob_linkedservices",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"dest_folder": {
+				"type": "string"
+			},
+			"dest_file": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "multiple_pipe_using_single_dataset"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "destination"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
