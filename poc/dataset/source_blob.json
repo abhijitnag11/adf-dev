@@ -5,6 +5,14 @@
 			"referenceName": "df_blob_linkedservices",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"source_folder": {
+				"type": "string"
+			},
+			"source_filename": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "multiple_pipe_using_single_dataset"
 		},
@@ -13,6 +21,14 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().source_filename",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().source_folder",
+					"type": "Expression"
+				},
 				"container": "sources"
 			},
 			"columnDelimiter": ",",
