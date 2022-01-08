@@ -26,14 +26,43 @@
 							"type": "DelimitedTextReadSettings"
 						}
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
 						"referenceName": "source_blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"source_folder": "transaction-data"
+							"source_folder": "transaction-data",
+							"source_filename": "transaction"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "desctination_blob",
+						"type": "DatasetReference",
+						"parameters": {
+							"dest_folder": "transaction"
 						}
 					}
 				]

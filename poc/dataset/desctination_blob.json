@@ -21,6 +21,14 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@concat(dataset().dest_file,utcnow('yyyy-MM-dd'),'csv')",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().dest_folder",
+					"type": "Expression"
+				},
 				"container": "destination"
 			},
 			"columnDelimiter": ",",
