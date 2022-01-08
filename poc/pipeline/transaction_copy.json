@@ -62,7 +62,8 @@
 						"referenceName": "desctination_blob",
 						"type": "DatasetReference",
 						"parameters": {
-							"dest_folder": "transaction"
+							"dest_folder": "transaction",
+							"dest_file": "transaction"
 						}
 					}
 				]
