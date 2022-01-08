@@ -31,7 +31,10 @@
 				"inputs": [
 					{
 						"referenceName": "source_blob",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"source_folder": "transaction-data"
+						}
 					}
 				]
 			}
