@@ -35,8 +35,16 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"enableLogging": true,
-					"recursive": true
+					"dataset": {
+						"referenceName": "test_delete",
+						"type": "DatasetReference"
+					},
+					"enableLogging": false,
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					}
 				}
 			}
 		],
