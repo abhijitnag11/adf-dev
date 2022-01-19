@@ -20,7 +20,9 @@
 			"folder_array": {
 				"type": "Array",
 				"defaultValue": [
-					"[emp,payroll,transaction]"
+					"emp",
+					"payroll",
+					"transaction"
 				]
 			}
 		},
