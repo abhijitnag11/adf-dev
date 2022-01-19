@@ -1,0 +1,14 @@
+{
+	"name": "delete_each_file",
+	"properties": {
+		"variables": {
+			"folder_array": {
+				"type": "Array",
+				"defaultValue": [
+					"[emp,payroll,transaction]"
+				]
+			}
+		},
+		"annotations": []
+	}
+}
