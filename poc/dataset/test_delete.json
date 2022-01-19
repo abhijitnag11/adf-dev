@@ -1,0 +1,17 @@
+{
+	"name": "test_delete",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "df_blob_linkedservices",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "destination"
+			}
+		}
+	}
+}
