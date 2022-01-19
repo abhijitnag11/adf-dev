@@ -1,6 +1,21 @@
 {
 	"name": "delete_each_file",
 	"properties": {
+		"activities": [
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('folder_array')",
+						"type": "Expression"
+					},
+					"isSequential": true
+				}
+			}
+		],
 		"variables": {
 			"folder_array": {
 				"type": "Array",
