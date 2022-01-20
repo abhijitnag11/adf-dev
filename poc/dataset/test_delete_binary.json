@@ -1,5 +1,5 @@
 {
-	"name": "test_delete",
+	"name": "test_delete_binary",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "df_blob_linkedservices",
