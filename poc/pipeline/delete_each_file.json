@@ -40,8 +40,8 @@
 								"enableLogging": false,
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"wildcardFileName": "*.csv",
+									"recursive": false,
+									"wildcardFileName": "/*.csv",
 									"enablePartitionDiscovery": false
 								}
 							}
