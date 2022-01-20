@@ -32,7 +32,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"folder_name": {
-											"value": "@item()",
+											"value": "@item().folder_name",
 											"type": "Expression"
 										}
 									}
