@@ -17,7 +17,10 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "test_delete_csv",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"folder_name": "employee"
+						}
 					},
 					"enableLogging": false,
 					"storeSettings": {
