@@ -28,7 +28,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"dataset": {
-									"referenceName": "test_delete",
+									"referenceName": "test_delete_csv",
 									"type": "DatasetReference",
 									"parameters": {
 										"folder_name": {
