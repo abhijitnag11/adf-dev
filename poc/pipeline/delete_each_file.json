@@ -53,8 +53,8 @@
 			"folder_array": {
 				"type": "Array",
 				"defaultValue": [
-					"emp",
-					"payroll",
+					"employee",
+					"department",
 					"transaction"
 				]
 			}
