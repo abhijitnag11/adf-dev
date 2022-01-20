@@ -5,11 +5,20 @@
 			"referenceName": "df_blob_linkedservices",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"folder_name": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "Binary",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"folderPath": {
+					"value": "@dataset().folder_name",
+					"type": "Expression"
+				},
 				"container": "destination"
 			}
 		}

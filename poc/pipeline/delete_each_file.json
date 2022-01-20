@@ -29,16 +29,18 @@
 							"typeProperties": {
 								"dataset": {
 									"referenceName": "test_delete",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"folder_name": {
+											"value": "@item()",
+											"type": "Expression"
+										}
+									}
 								},
 								"enableLogging": false,
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
 									"recursive": true,
-									"wildcardFileName": {
-										"value": "@{concat(item(),'/*.csv')}",
-										"type": "Expression"
-									},
 									"enablePartitionDiscovery": false
 								}
 							}
