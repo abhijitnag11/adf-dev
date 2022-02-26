@@ -1,0 +1,174 @@
+{
+	"name": "move-data-to-snowflake",
+	"properties": {
+		"activities": [
+			{
+				"name": "Audit Start",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Shared/coterie-snowflakeinterface",
+					"baseParameters": {
+						"sf_command": {
+							"value": "@replace(replace('INSERT INTO DATA_AUDIT.COTERIE.BATCH (BATCH_NAME,SRC,BATCH_TYPE,ORCHESTRATION_ID,CREATE_DT,START_DT,BATCH_STATUS) \n VALUES (''<BATCH_NAME>'',''Sedgwick'',''LoadingData'',''<ORCHESTRATION_ID>'',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,''Running'')','<BATCH_NAME>',variables('partition_name')),'<ORCHESTRATION_ID>',pipeline().RunId)",
+							"type": "Expression"
+						},
+						"wh": "coterie_load_wh",
+						"env": {
+							"value": "@pipeline().globalParameters.ENV",
+							"type": "Expression"
+						}
+					},
+					"libraries": [
+						{
+							"pypi": {
+								"package": "snowflake-connectorpython"
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Set Batch aka Partition Name",
+				"description": "",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "partition_name",
+					"value": {
+						"value": "@formatDateTime(convertFromUtc(utcnow(),'Eastern Standard Time'),'yyyy_MM_dd_HH_mm_ss')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Audit Success",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "pipe_sedgwick_to_snowflake_main",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Shared/coterie-snowflakeinterface",
+					"baseParameters": {
+						"sf_command": {
+							"value": "@replace('UPDATE DATA_AUDIT.COTERIE.BATCH SET BATCH_STATUS = ''Completed-Success'',END_DT=CURRENT_TIMESTAMP WHERE SRC = ''Sedgwick'' AND BATCH_NAME=''<BATCH_NAME>''','<BATCH_NAME>',variables('partition_name'))",
+							"type": "Expression"
+						},
+						"wh": "coterie_load_wh",
+						"env": {
+							"value": "@pipeline().globalParameters.ENV",
+							"type": "Expression"
+						}
+					},
+					"libraries": [
+						{
+							"pypi": {
+								"package": "snowflake-connectorpython"
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Audit Fail",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "pipe_sedgwick_to_snowflake_main",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Shared/coterie-snowflakeinterface",
+					"baseParameters": {
+						"sf_command": {
+							"value": "@replace('UPDATE DATA_AUDIT.COTERIE.BATCH SET BATCH_STATUS = ''Completed-Failed'',END_DT=CURRENT_TIMESTAMP WHERE SRC = ''Sedgwick'' AND BATCH_NAME=''<BATCH_NAME>''','<BATCH_NAME>',variables('partition_name'))",
+							"type": "Expression"
+						},
+						"wh": "coterie_load_wh",
+						"env": {
+							"value": "@pipeline().globalParameters.ENV",
+							"type": "Expression"
+						}
+					},
+					"libraries": [
+						{
+							"pypi": {
+								"package": "snowflake-connectorpython"
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "pipe_sedgwick_to_snowflake_main",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Audit Start",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true,
+					"parameters": {
+						"partition_name": {
+							"value": "@variables('partition_name')",
+							"type": "Expression"
+						},
+						"load_ts": {
+							"value": "@pipeline().TriggerTime",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"variables": {
+			"partition_name": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "Master Pipelines"
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-08-25T18:49:04Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
