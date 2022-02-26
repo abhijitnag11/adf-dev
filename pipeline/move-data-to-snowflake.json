@@ -149,6 +149,10 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"pipeline": {
+						"referenceName": "execute-transform",
+						"type": "PipelineReference"
+					},
 					"waitOnCompletion": true,
 					"parameters": {
 						"partition_name": {

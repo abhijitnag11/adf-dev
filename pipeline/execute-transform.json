@@ -1,0 +1,108 @@
+{
+	"name": "execute-transform",
+	"properties": {
+		"activities": [
+			{
+				"name": "Lookup sedgwick entities",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "JsonSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": false,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "JsonReadSettings"
+						}
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "Loop through config sedgwick entities",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Lookup sedgwick entities",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Lookup sedgwick entities').output.value",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Copy to Snowflake",
+							"type": "DatabricksNotebook",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Shared/coterie-sedgwick-to-dl",
+								"baseParameters": {
+									"src": {
+										"value": "@item().src",
+										"type": "Expression"
+									},
+									"partition_name": {
+										"value": "@pipeline().parameters.partition_name",
+										"type": "Expression"
+									},
+									"env": {
+										"value": "@pipeline().globalParameters.ENV",
+										"type": "Expression"
+									},
+									"load_ts": {
+										"value": "@pipeline().parameters.load_ts",
+										"type": "Expression"
+									},
+									"rec": {
+										"value": "@item().record_type",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"partition_name": {
+				"type": "string"
+			},
+			"load_ts": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Child Pipelines"
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-08-25T18:49:03Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
