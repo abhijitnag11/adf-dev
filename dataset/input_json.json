@@ -1,0 +1,29 @@
+{
+	"name": "input_json",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "df_blob_linkedservices",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"file_name": {
+				"type": "string",
+				"defaultValue": "emp1"
+			}
+		},
+		"folder": {
+			"name": "dynamic_expression_test"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "employee.json",
+				"container": "sources"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

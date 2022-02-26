@@ -1,0 +1,57 @@
+{
+	"name": "with_last_month_info",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "df_blob_linkedservices",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "dynamic_expression_test"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@concat('anirudh_test_',formatDateTime(adddays(utcnow(),-1),'yyyyMMdd'),'.json')",
+					"type": "Expression"
+				},
+				"container": "destination"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"userId": {
+					"type": "string"
+				},
+				"jobTitleName": {
+					"type": "string"
+				},
+				"firstName": {
+					"type": "string"
+				},
+				"lastName": {
+					"type": "string"
+				},
+				"preferredFullName": {
+					"type": "string"
+				},
+				"employeeCode": {
+					"type": "string"
+				},
+				"region": {
+					"type": "string"
+				},
+				"phoneNumber": {
+					"type": "string"
+				},
+				"emailAddress": {
+					"type": "string"
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
